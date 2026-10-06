@@ -1,0 +1,58 @@
+.App {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.Header {
+  font-size: 24px;
+  margin: 20px;
+}
+
+.Calculator {
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.CalcDisplay {
+  border: 1px solid #000;
+  min-height: 50px;
+  font-size: 2rem;
+  padding: 10px;
+  text-align: right;
+  background-color: #adadad;
+  box-sizing: border-box;
+}
+
+.CalcButtons {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.CalcButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  border: 1px solid blue;
+  font-size: 2em;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+
+.ClearButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  border: 1px solid blue;
+  font-size: 2em;
+  background-color: orangered;
+  cursor: pointer;
+}
+
+.CalcButton:hover,
+.ClearButton:hover {
+  opacity: 0.8;
+}
