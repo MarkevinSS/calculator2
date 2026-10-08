@@ -1,58 +1,205 @@
-.App {
+* {
   box-sizing: border-box;
-  text-align: center;
+}
+
+body {
+  background-color: #ffffff;
+  color: #1e293b;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .Header {
-  font-size: 24px;
-  margin: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .Calculator {
-  width: 90%;
-  max-width: 500px;
-  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background-color: #f1f5f9;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px solid #4cb0bd;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .CalcDisplay {
-  border: 1px solid #000;
-  min-height: 50px;
+  background-color: #0f172a;
+  color: #fafbfd;
   font-size: 2rem;
-  padding: 10px;
+  font-weight: bold;
   text-align: right;
-  background-color: #adadad;
-  box-sizing: border-box;
+
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+
+  border: 1px solid #334155;
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  overflow: hidden;
+  word-break: break-word;
 }
 
-.CalcButtons {
+.CalcGrid {
   display: grid;
-  gap: 2px;
   grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.CalcButton,
+.ClearButton,
+.SurnameButton {
+  width: 100%;
+  min-height: 60px;
+
+  padding: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .CalcButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 60px;
-  border: 1px solid blue;
-  font-size: 2em;
-  background-color: aquamarine;
-  cursor: pointer;
+  background-color: #3b82f6;
+  color: #ffffff;
+
+  box-shadow: 0 4px 0 #1d4ed8;
 }
 
+.CalcButton:hover {
+  background-color: #60a5fa;
+}
+
+.CalcButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #1d4ed8;
+}
+
+.CalcGrid .CalcButton:nth-child(4),
+.CalcGrid .CalcButton:nth-child(8),
+.CalcGrid .CalcButton:nth-child(12),
+.CalcGrid .CalcButton:nth-child(16) {
+  background-color: #28d9ca;
+  color: #ffffff;
+  box-shadow: 0 4px 0 #16a196;
+}
+
+.CalcGrid .CalcButton:nth-child(4):hover,
+.CalcGrid .CalcButton:nth-child(8):hover,
+.CalcGrid .CalcButton:nth-child(12):hover,
+.CalcGrid .CalcButton:nth-child(16):hover {
+  background-color: #000000;
+}
+
+.CalcGrid .CalcButton:nth-child(4):active,
+.CalcGrid .CalcButton:nth-child(8):active,
+.CalcGrid .CalcButton:nth-child(12):active,
+.CalcGrid .CalcButton:nth-child(16):active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #6d28d9;
+}
+
+/* Clear Button */
 .ClearButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 60px;
-  border: 1px solid blue;
-  font-size: 2em;
-  background-color: orangered;
-  cursor: pointer;
+  background-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 4px 0 #b91c1c;
 }
 
-.CalcButton:hover,
 .ClearButton:hover {
-  opacity: 0.8;
+  background-color: #f87171;
+}
+
+.ClearButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #b91c1c;
+}
+
+.CalcGrid .CalcButton:nth-child(15) {
+  background-color: #22c55e;
+  color: #ffffff;
+  box-shadow: 0 4px 0 #15803d;
+}
+
+.CalcGrid .CalcButton:nth-child(15):hover {
+  background-color: #4ade80;
+}
+
+.CalcGrid .CalcButton:nth-child(15):active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #15803d;
+}
+
+.SurnameButton {
+  grid-column: 1 / -1;
+
+  background-color: #3b82f6;
+  color: #ffffff;
+
+  box-shadow: 0 4px 0 #1d4ed8;
+}
+
+.SurnameButton:hover {
+  background-color: #60a5fa;
+}
+
+.SurnameButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #1d4ed8;
+}
+
+@media (max-width: 400px) {
+
+  .App {
+    padding: 10px;
+  }
+
+  .Calculator {
+    width: 100%;
+    max-width: 350px;
+    padding: 15px;
+  }
+
+  .Header {
+    font-size: 1.1rem;
+  }
+
+  .CalcDisplay {
+    font-size: 1.7rem;
+    min-height: 65px;
+  }
+
+  .CalcGrid {
+    gap: 6px;
+  }
+
+  .CalcButton,
+  .ClearButton,
+  .SurnameButton {
+    min-height: 55px;
+    padding: 10px;
+    font-size: 1.1rem;
+  }
 }

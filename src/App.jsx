@@ -1,86 +1,98 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
 function CalcDisplay({ dispValue }) {
-  return (
-    <div className="CalcDisplay">
-      {dispValue}
-    </div>
-  )
+  return <div className="CalcDisplay">{dispValue}</div>;
 }
 
 function CalcButton({ label, buttonClassName = "CalcButton", onClick }) {
   return (
-    <div className={buttonClassName} onClick={onClick}>
+    <button className={buttonClassName} onClick={onClick}>
       {label}
-    </div>
-  )
+    </button>
+  );
 }
 
 function App() {
-  const [display, setDisplay] = useState('0')
-  const [firstNumber, setFirstNumber] = useState(null)
-  const [operator, setOperator] = useState(null)
-  const [newNumber, setNewNumber] = useState(true)
+  const [disp, setDisp] = useState(0);
+  const [num1, setNum1] = useState(null);
+  const [num2, setNum2] = useState(null);
+  const [op, setOp] = useState(null);
 
-  const onClickHandler = (e) => {
-    const value = e.target.innerHTML
+  // Number buttons
+  const numClickHandler = (e) => {
+    e.preventDefault();
+    const value = e.target.innerHTML;
 
-
-    if (value === 'CLR') {
-      setDisplay('0')
-      setFirstNumber(null)
-      setOperator(null)
-      setNewNumber(true)
-      return
-    }
-
-
-    if (!isNaN(value)) {
-      if (newNumber || display === '0') {
-        setDisplay(value)
-        setNewNumber(false)
+    if (op === null) {
+      if (num1 === null) {
+        setNum1(value);
+        setDisp(value);
       } else {
-        setDisplay(display + value)
+        setNum1(num1 + value);
+        setDisp(num1 + value);
       }
-      return
+    } else {
+      if (num2 === null) {
+        setNum2(value);
+        setDisp(value);
+      } else {
+        setNum2(num2 + value);
+        setDisp(num2 + value);
+      }
+    }
+  };
+
+  // Operator buttons
+  const opClickHandler = (e) => {
+    e.preventDefault();
+    const value = e.target.innerHTML;
+
+    setOp(value);
+    setDisp(value);
+  };
+
+  // Equals button
+  const eqClickHandler = (e) => {
+    e.preventDefault();
+
+    if (num1 === null || num2 === null || op === null) {
+      return;
     }
 
-    if (['+', '-', 'X', '÷'].includes(value)) {
-      setFirstNumber(Number(display))
-      setOperator(value)
-      setNewNumber(true)
-      return
+    if (op === "+") {
+      setDisp(parseInt(num1) + parseInt(num2));
     }
 
-    if (value === '=') {
-      if (firstNumber === null || operator === null) {
-        return
-      }
-
-      const secondNumber = Number(display)
-      let result
-
-      if (operator === '+') {
-        result = firstNumber + secondNumber
-      } else if (operator === '-') {
-        result = firstNumber - secondNumber
-      } else if (operator === 'X') {
-        result = firstNumber * secondNumber
-      } else if (operator === '÷') {
-        if (secondNumber === 0) {
-          setDisplay('Error')
-          return
-        }
-        result = firstNumber / secondNumber
-      }
-
-      setDisplay(String(result))
-      setFirstNumber(null)
-      setOperator(null)
-      setNewNumber(true)
+    if (op === "-") {
+      setDisp(parseInt(num1) - parseInt(num2));
     }
-  }
+
+    if (op === "*") {
+      setDisp(parseInt(num1) * parseInt(num2));
+    }
+
+    if (op === "÷") {
+      setDisp(parseInt(num1) / parseInt(num2));
+    }
+  };
+
+  // Clear button
+  const clrClickHandler = (e) => {
+    e.preventDefault();
+
+    setDisp(0);
+    setNum1(null);
+    setNum2(null);
+    setOp(null);
+  };
+
+  // Surname button
+  const surnameClickHandler = (e) => {
+    e.preventDefault();
+
+    setDisp("Markevin Serrano");
+  };
 
   return (
     <div className="App">
@@ -91,40 +103,45 @@ function App() {
 
       <div className="Calculator">
 
-        <CalcDisplay dispValue={display} />
+        <CalcDisplay dispValue={disp} />
 
-        <div className="CalcButtons">
+        <div className="CalcGrid">
 
-          <CalcButton label="7" onClick={onClickHandler} />
-          <CalcButton label="8" onClick={onClickHandler} />
-          <CalcButton label="9" onClick={onClickHandler} />
-          <CalcButton label="÷" onClick={onClickHandler} />
+          <CalcButton label={"7"} onClick={numClickHandler} />
+          <CalcButton label={"8"} onClick={numClickHandler} />
+          <CalcButton label={"9"} onClick={numClickHandler} />
+          <CalcButton label={"÷"} onClick={opClickHandler} />
 
-          <CalcButton label="4" onClick={onClickHandler} />
-          <CalcButton label="5" onClick={onClickHandler} />
-          <CalcButton label="6" onClick={onClickHandler} />
-          <CalcButton label="X" onClick={onClickHandler} />
+          <CalcButton label={"4"} onClick={numClickHandler} />
+          <CalcButton label={"5"} onClick={numClickHandler} />
+          <CalcButton label={"6"} onClick={numClickHandler} />
+          <CalcButton label={"*"} onClick={opClickHandler} />
 
-          <CalcButton label="1" onClick={onClickHandler} />
-          <CalcButton label="2" onClick={onClickHandler} />
-          <CalcButton label="3" onClick={onClickHandler} />
-          <CalcButton label="-" onClick={onClickHandler} />
+          <CalcButton label={"1"} onClick={numClickHandler} />
+          <CalcButton label={"2"} onClick={numClickHandler} />
+          <CalcButton label={"3"} onClick={numClickHandler} />
+          <CalcButton label={"-"} onClick={opClickHandler} />
 
           <CalcButton
-            label="CLR"
+            label={"C"}
             buttonClassName="ClearButton"
-            onClick={onClickHandler}
+            onClick={clrClickHandler}
           />
 
-          <CalcButton label="0" onClick={onClickHandler} />
-          <CalcButton label="=" onClick={onClickHandler} />
-          <CalcButton label="+" onClick={onClickHandler} />
+          <CalcButton label={"0"} onClick={numClickHandler} />
+          <CalcButton label={"="} onClick={eqClickHandler} />
+          <CalcButton label={"+"} onClick={opClickHandler} />
+
+          <CalcButton
+            label={"Serrano"}
+            buttonClassName="SurnameButton"
+            onClick={surnameClickHandler}
+          />
 
         </div>
       </div>
-
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
